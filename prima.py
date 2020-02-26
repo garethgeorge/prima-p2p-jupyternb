@@ -288,8 +288,8 @@ class Prima(ProsthesisSystem):
         self.eye = eye
         self.shape = (20, 20)
 
-        r_arr = 40
-        spacing = 100
+        r_arr = 35
+        spacing = 105
 
         self.earray = ElectrodeGridHex(self.shape, spacing, x=x, y=y, z=z,
                                        rot=rot, etype=DiskElectrode, r=r_arr)

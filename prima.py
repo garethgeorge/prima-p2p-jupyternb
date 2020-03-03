@@ -33,7 +33,7 @@ import math
 
 
 class ElectrodeGridHex(ElectrodeArray):
-    """Rectangular grid of electrodes
+    """Hexagonal grid of electrodes
     Parameters
     ----------
     shape : (rows, cols)

@@ -288,6 +288,10 @@ class Prima(ProsthesisSystem):
         self.eye = eye
         self.shape = (20, 20)
 
+        # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3419261/ <- describes active vs return electrodes
+        # so the hexagonal electrode consides of an active electrode surrounded by a ring return electrode 
+        # this makes it a very different type of electrode from the basic disk electrode...
+        # for now, based on data available, we estimate that the density is ~100um spacing with an active electrode of 70um
         r_arr = 35
         spacing = 105
 

@@ -23,6 +23,7 @@
 # objects of a given radius (100um), although it would be relatively straightforward
 # to allow the user to choose the electrode type.
 
+import pulse2percept
 from pulse2percept.viz import plot_implant_on_axon_map
 import matplotlib.pyplot as plt
 from pulse2percept.implants import ProsthesisSystem

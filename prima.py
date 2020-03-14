@@ -293,7 +293,7 @@ class Prima(ProsthesisSystem):
         # so the hexagonal electrode consides of an active electrode surrounded by a ring return electrode 
         # this makes it a very different type of electrode from the basic disk electrode...
         # for now, based on data available, we estimate that the density is ~100um spacing with an active electrode of 70um
-        r_arr = 35
+        r_arr = 10
         spacing = 105
 
         self.earray = ElectrodeGridHex(self.shape, spacing, x=x, y=y, z=z,
@@ -307,6 +307,7 @@ class Prima(ProsthesisSystem):
             raise TypeError("'eye' must be a string, either 'LE' or 'RE'.")
         if eye != 'LE' and eye != 'RE':
             raise ValueError("'eye' must be either 'LE' or 'RE'.")
+        
         self.eye = eye
         # Unfortunately, in the left eye the labeling of columns is reversed...
         if eye == 'LE':
@@ -331,50 +332,50 @@ class Prima(ProsthesisSystem):
         return params
 
 
-class HexElectrode(DiskElectrode):
-    def electric_potential(self, x, y, z, v0):
-        """Calculate electric potential at (x, y, z)
+# class HexElectrode(DiskElectrode):
+#     def electric_potential(self, x, y, z, v0):
+#         """Calculate electric potential at (x, y, z)
 
-        Parameters
-        ----------
-        x/y/z : double
-            3D location at which to evaluate the electric potential
-        v0 : double
-            The quasi-static disk potential relative to a ground electrode at
-            infinity
+#         Parameters
+#         ----------
+#         x/y/z : double
+#             3D location at which to evaluate the electric potential
+#         v0 : double
+#             The quasi-static disk potential relative to a ground electrode at
+#             infinity
 
-        Returns
-        -------
-        pot : double
-            The electric potential at (x, y, z).
+#         Returns
+#         -------
+#         pot : double
+#             The electric potential at (x, y, z).
 
 
-        The electric potential :math:`V(r,z)` of a disk electrode is given by
-        [WileyWebster1982]_:
+#         The electric potential :math:`V(r,z)` of a disk electrode is given by
+#         [WileyWebster1982]_:
 
-        .. math::
+#         .. math::
 
-            V(r,z) = \\sin^{-1} \\bigg\\{ \\frac{2a}{\\sqrt{(r-a)^2 + z^2} + \\sqrt{(r+a)^2 + z^2}} \\bigg\\} \\times \\frac{2 V_0}{\\pi},
+#             V(r,z) = \\sin^{-1} \\bigg\\{ \\frac{2a}{\\sqrt{(r-a)^2 + z^2} + \\sqrt{(r+a)^2 + z^2}} \\bigg\\} \\times \\frac{2 V_0}{\\pi},
 
-        for :math:`z \\neq 0`, where :math:`r` and :math:`z` are the radial
-        and axial distances from the center of the disk, :math:`V_0` is the
-        disk potential, :math:`\\sigma` is the medium conductivity,
-        and :math:`a` is the disk radius.
+#         for :math:`z \\neq 0`, where :math:`r` and :math:`z` are the radial
+#         and axial distances from the center of the disk, :math:`V_0` is the
+#         disk potential, :math:`\\sigma` is the medium conductivity,
+#         and :math:`a` is the disk radius.
 
-        """
-        radial_dist = np.sqrt((x - self.x) ** 2 + (y - self.y) ** 2)
-        axial_dist = z - self.z
-        if np.isclose(axial_dist, 0):
-            # Potential on the electrode surface (Eq. 9 in Wiley & Webster):
-            if radial_dist > self.r:
-                # Outside the electrode:
-                return 2.0 * v0 / np.pi * np.arcsin(self.r / radial_dist)
-            else:
-                # On the electrode:
-                return v0
-        else:
-            # Off the electrode surface (Eq. 10):
-            numer = 2 * self.r
-            denom = np.sqrt((radial_dist - self.r) ** 2 + axial_dist ** 2)
-            denom += np.sqrt((radial_dist + self.r) ** 2 + axial_dist ** 2)
-            return 2.0 * v0 / np.pi * np.arcsin(numer / denom)
+#         """
+#         radial_dist = np.sqrt((x - self.x) ** 2 + (y - self.y) ** 2)
+#         axial_dist = z - self.z
+#         if np.isclose(axial_dist, 0):
+#             # Potential on the electrode surface (Eq. 9 in Wiley & Webster):
+#             if radial_dist > self.r:
+#                 # Outside the electrode:
+#                 return 2.0 * v0 / np.pi * np.arcsin(self.r / radial_dist)
+#             else:
+#                 # On the electrode:
+#                 return v0
+#         else:
+#             # Off the electrode surface (Eq. 10):
+#             numer = 2 * self.r
+#             denom = np.sqrt((radial_dist - self.r) ** 2 + axial_dist ** 2)
+#             denom += np.sqrt((radial_dist + self.r) ** 2 + axial_dist ** 2)
+#             return 2.0 * v0 / np.pi * np.arcsin(numer / denom)

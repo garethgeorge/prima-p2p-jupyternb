@@ -8,3 +8,6 @@ We provide the source code the evaluation of our implementation of Prima for pul
  - dana-prima-pca.ipynb contains learning code from figuring out how to run PCA against pulse2percept
  - dana-generate-pca-dataset-lambda.ipynb contains the code for generating datasets and PCA graphs for the ArgusII device against the axonmap model
 
+# Read our report 
+
+Find our report at https://github.com/garethgeorge/prima-p2p-jupyternb/blob/master/p2p-prima-report.pdf 
